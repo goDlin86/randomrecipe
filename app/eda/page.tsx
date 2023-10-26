@@ -11,18 +11,25 @@ const badges = [
   'pizza'
 ]
 
+type RecipeData = {
+  image: string
+  label: string
+  url: string
+  ingredientLines: Array<string>
+}
+
 export default function Home() {
-  const [recipes, setRecipes] = useState([])
+  const [recipe, setRecipe] = useState<RecipeData | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [q, setQ] = useState('chicken')
 
   const getRecipes = async () => {
     setIsLoading(true)
-    setRecipes([])
+    setRecipe(null)
     const r = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&app_id=${process.env.NEXT_PUBLIC_APP_ID}&app_key=${process.env.NEXT_PUBLIC_APP_KEY}&q=${q}&random=true`)
     const data = await r.json() 
     console.log(data)
-    setRecipes(data.hits)
+    setRecipe(data.hits[0].recipe)
     setIsLoading(false)
   }
 
@@ -43,19 +50,19 @@ export default function Home() {
       <div className='cursor-pointer p-4 rounded-lg bg-slate-800 inline-block mx-auto my-8 transition hover:bg-slate-700 font-semibold' onClick={getRecipes}>Random Recipe</div>
 
       {isLoading && <div>Loading</div>}
-      {recipes.length > 0 &&
+      {recipe &&
           <div className='flex flex-col justify-center md:flex-row'>
             <div>
-              <img src={recipes[0].recipe.image} className='rounded-lg' />
+              <img src={recipe.image} className='rounded-lg' />
             </div>
             <div className='p-4'>
-              <div className='text-lg font-semibold'>{recipes[0].recipe.label}</div>
+              <div className='text-lg font-semibold'>{recipe.label}</div>
               <div className='my-2'>
-                {recipes[0].recipe.ingredientLines.map((i, k) => (
+                {recipe.ingredientLines.map((i, k) => (
                   <div key={k}>{i}</div>
                 ))}
               </div>
-              <a className='underline' href={recipes[0].recipe.url} target='_blank'>Instructions</a>
+              <a className='underline' href={recipe.url} target='_blank'>Instructions</a>
             </div>
           </div>
       }

@@ -38,7 +38,7 @@ export default function Home() {
       <div className='flex my-8 justify-center'>
         {badges.map((b, i) => (
           <div 
-            className={'cursor-pointer p-2 rounded-lg bg-slate-800 inline-block mx-auto mx-2 transition '+(b === q ? 'bg-slate-500' : 'hover:bg-slate-700')+' font-semibold'} 
+            className={'cursor-pointer p-2 rounded-lg inline-block mx-2 transition '+(b === q ? 'bg-slate-500' : 'bg-slate-800 hover:bg-slate-700')+' font-semibold'} 
             onClick={() => setQ(b)} 
             key={i}
           >

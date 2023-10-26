@@ -35,10 +35,10 @@ export default function Home() {
 
   return (
     <div className='container mx-auto text-center'>
-      <div className='flex my-8 justify-center'>
+      <div className='flex mt-8 justify-center'>
         {badges.map((b, i) => (
           <div 
-            className={'cursor-pointer p-2 rounded-lg inline-block mx-2 transition '+(b === q ? 'bg-slate-500' : 'bg-slate-800 hover:bg-slate-700')+' font-semibold'} 
+            className={'cursor-pointer p-2 rounded-lg inline-block mx-2 transition '+(b===q ? 'bg-slate-500' : 'bg-slate-800 hover:bg-slate-700')+' font-semibold'} 
             onClick={() => setQ(b)} 
             key={i}
           >
@@ -52,7 +52,7 @@ export default function Home() {
       {isLoading && <div>Loading</div>}
       {recipe &&
           <div className='flex flex-col justify-center md:flex-row'>
-            <div>
+            <div className='mx-auto md:mx-0'>
               <img src={recipe.image} className='rounded-lg' />
             </div>
             <div className='p-4'>

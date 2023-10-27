@@ -19,7 +19,7 @@ type RecipeData = {
 }
 
 export default function Home() {
-  const [recipe, setRecipe] = useState<RecipeData | null>(null)
+  const [recipe, setRecipe] = useState<RecipeData|null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [q, setQ] = useState('chicken')
 
@@ -38,12 +38,12 @@ export default function Home() {
       <div className='flex mt-8 justify-center'>
         {badges.map((b, i) => (
           <div 
-            className={'cursor-pointer p-2 rounded-lg inline-block mx-2 transition '+(b===q ? 'bg-slate-500' : 'bg-slate-800 hover:bg-slate-700')+' font-semibold'} 
+            className={'cursor-pointer p-2 rounded-lg inline-block mx-0.5 sm:mx-1 md:mx-2 transition '+(b===q?'bg-slate-500':'bg-slate-800 hover:bg-slate-700')+' font-semibold'} 
             onClick={() => setQ(b)} 
             key={i}
           >
-            <img src={'/icons/'+b+'.svg'} />
-            <div>{b}</div>
+            <img src={'/icons/'+b+'.svg'} className='sm:w-16 w-10' />
+            <div className='text-xs sm:text-base '>{b}</div>
           </div>
         ))}        
       </div>
@@ -51,7 +51,7 @@ export default function Home() {
 
       {isLoading && <div>Loading</div>}
       {recipe &&
-          <div className='flex flex-col justify-center md:flex-row'>
+          <div className='flex flex-col justify-center md:flex-row mb-8'>
             <div className='mx-auto md:mx-0'>
               <img src={recipe.image} className='rounded-lg' />
             </div>

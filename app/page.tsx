@@ -40,7 +40,7 @@ export default function Home() {
       <div className='flex mt-8 justify-center'>
         {badges.map((b, i) => (
           <div 
-            className={'cursor-pointer p-2 rounded-lg inline-block mx-0.5 sm:mx-1 md:mx-2 transition '+(b===q?'bg-slate-500':'bg-slate-800 hover:bg-slate-700')+' font-semibold'} 
+            className={'cursor-pointer p-2 rounded-lg inline-block mx-0.5 sm:mx-1 md:mx-2 transition font-semibold '+(b===q?'bg-slate-500':'bg-slate-800 hover:bg-slate-700')} 
             onClick={() => setQ(b)} 
             key={i}
           >
@@ -49,7 +49,15 @@ export default function Home() {
           </div>
         ))}        
       </div>
-      <div className='cursor-pointer p-4 rounded-lg bg-slate-800 inline-block mx-auto my-8 transition hover:bg-slate-700 font-semibold' onClick={getRecipes}>{isLoading ? 'Loading...' : 'Get Random Recipe'}</div>
+      {isLoading ?
+        <div className='p-4 my-8 font-semibold'>Loading...</div> :
+        <div 
+          className='p-4 rounded-lg inline-block mx-auto my-8 transition font-semibold cursor-pointer bg-slate-800 hover:bg-slate-700' 
+          onClick={getRecipes}
+        >
+          Get Random Recipe
+        </div>
+      }
 
       {recipe &&
           <div className='flex flex-col justify-center md:flex-row mb-8'>

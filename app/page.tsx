@@ -24,13 +24,15 @@ export default function Home() {
   const [q, setQ] = useState('chicken')
 
   const getRecipes = async () => {
-    setIsLoading(true)
-    setRecipe(null)
-    const r = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&app_id=${process.env.NEXT_PUBLIC_APP_ID}&app_key=${process.env.NEXT_PUBLIC_APP_KEY}&q=${q}&random=true`)
-    const data = await r.json() 
-    console.log(data)
-    setRecipe(data.hits[0].recipe)
-    setIsLoading(false)
+    if (!isLoading) {
+      setIsLoading(true)
+      setRecipe(null)
+      const r = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&app_id=${process.env.NEXT_PUBLIC_APP_ID}&app_key=${process.env.NEXT_PUBLIC_APP_KEY}&q=${q}&random=true`)
+      const data = await r.json() 
+      console.log(data)
+      setRecipe(data.hits[0].recipe)
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -47,9 +49,8 @@ export default function Home() {
           </div>
         ))}        
       </div>
-      <div className='cursor-pointer p-4 rounded-lg bg-slate-800 inline-block mx-auto my-8 transition hover:bg-slate-700 font-semibold' onClick={getRecipes}>Get Random Recipe</div>
+      <div className='cursor-pointer p-4 rounded-lg bg-slate-800 inline-block mx-auto my-8 transition hover:bg-slate-700 font-semibold' onClick={getRecipes}>{isLoading ? 'Loading...' : 'Get Random Recipe'}</div>
 
-      {isLoading && <div>Loading...</div>}
       {recipe &&
           <div className='flex flex-col justify-center md:flex-row mb-8'>
             <div className='mx-auto md:mx-0'>

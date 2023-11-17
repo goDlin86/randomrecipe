@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const badges = [
   'fish',
@@ -49,32 +50,47 @@ export default function Home() {
           </div>
         ))}        
       </div>
-      {isLoading ?
-        <div className='p-4 my-8 font-semibold'>Loading...</div> :
-        <div 
-          className='p-4 rounded-lg inline-block mx-auto my-8 transition font-semibold cursor-pointer bg-slate-800 hover:bg-slate-700' 
-          onClick={getRecipes}
-        >
-          Get Random Recipe
-        </div>
-      }
-
-      {recipe &&
-          <div className='flex flex-col justify-center md:flex-row mb-8'>
-            <div className='mx-auto md:mx-0'>
-              <img src={recipe.image} className='rounded-lg' />
+      <AnimatePresence mode='wait'>
+        {isLoading ?
+          <motion.div
+            key='loading'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className='p-4 my-8 font-semibold'>Loading...</div>
+          </motion.div> :
+          <motion.div
+            key='button'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div 
+              className='p-4 rounded-lg inline-block mx-auto my-8 transition font-semibold cursor-pointer bg-slate-800 hover:bg-slate-700' 
+              onClick={getRecipes}
+            >
+              Get Random Recipe
             </div>
-            <div className='p-4'>
-              <div className='text-lg font-semibold'>{recipe.label}</div>
-              <div className='my-2'>
-                {recipe.ingredientLines.map((i, k) => (
-                  <div key={k}>{i}</div>
-                ))}
+            {recipe && 
+              <div className='flex flex-col justify-center md:flex-row mb-8'>
+                <div className='mx-auto md:mx-0'>
+                  <img src={recipe.image} className='rounded-lg' />
+                </div>
+                <div className='p-4'>
+                  <div className='text-lg font-semibold'>{recipe.label}</div>
+                  <div className='my-2'>
+                    {recipe.ingredientLines.map((i, k) => (
+                      <div key={k}>{i}</div>
+                    ))}
+                  </div>
+                  <a className='underline' href={recipe.url} target='_blank'>Instructions</a>
+                </div>
               </div>
-              <a className='underline' href={recipe.url} target='_blank'>Instructions</a>
-            </div>
-          </div>
-      }
+            }
+          </motion.div>
+        }
+      </AnimatePresence>
     </div>
   )
 }

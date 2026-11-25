@@ -85,8 +85,8 @@ export default function Home() {
                 <div className='mx-auto'>
                   <img src={recipe.image} className='rounded-lg' />
                 </div>
-                <div className='p-4'>
-                  <div className='text-xl font-semibold'>{recipe.label}</div>
+                <div className='p-4 max-w-2xl mx-auto'>
+                  <div className='text-2xl font-semibold'>{recipe.label}</div>
                   <div className='my-2'>{recipe.desc}</div>
                   <div className='my-2 text-sm text-gray-400'>{recipe.time}</div>
                   <div className='my-2'>
